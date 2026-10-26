@@ -1,0 +1,1103 @@
+
+:root {
+  --green: #214d36;
+  --green-dark: #173b29;
+  --sage: #dce6d2;
+  --cream: #f8f5ec;
+  --white: #fffefa;
+  --text: #24352a;
+  --muted: #7c847b;
+  --border: #e7e5da;
+  --radius: 16px;
+}
+
+/* =========================
+   RESET & DASAR
+========================= */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.5;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+a:focus-visible {
+  outline: 2px solid #739d70;
+  outline-offset: 3px;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* =========================
+   LAYOUT UTAMA
+========================= */
+
+.layout {
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 225px;
+  background: var(--green-dark);
+  color: white;
+  padding: 25px 16px;
+  position: fixed;
+  inset: 0 auto 0 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  overflow-y: auto;
+}
+
+.logo {
+  font-family: "Playfair Display", serif;
+  font-size: 27px;
+  font-weight: 700;
+  margin: 0 8px 32px;
+  letter-spacing: -0.5px;
+}
+
+.logo span {
+  color: #c5d8a9;
+}
+
+.nav-link {
+  display: block;
+  color: #e4eade;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  padding: 13px 14px;
+  text-align: left;
+  border-radius: 10px;
+  margin-bottom: 5px;
+  font-size: 14px;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link.active {
+  background: #42664b;
+  color: white;
+}
+
+.sidebar-note {
+  margin-top: auto;
+  background: #31553b;
+  border-radius: 14px;
+  padding: 18px;
+  line-height: 1.6;
+  font-size: 12px;
+  color: #e9efdf;
+}
+
+.sidebar-note strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 7px;
+}
+
+.main {
+  margin-left: 225px;
+  padding: 24px 30px 45px;
+  min-width: 0;
+}
+
+/* =========================
+   HEADER & PENCARIAN
+========================= */
+
+.topbar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0 14px;
+  transition: border-color 0.2s ease;
+}
+
+.search:focus-within {
+  border-color: #739d70;
+}
+
+.search input {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  min-width: 0;
+  padding: 13px 8px;
+  background: transparent;
+  color: var(--text);
+}
+
+.search input::placeholder {
+  color: #9b9f96;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-button {
+  border: 1px solid var(--border);
+  background: white;
+  padding: 10px 13px;
+  border-radius: 10px;
+  color: var(--green);
+  transition: background 0.2s ease;
+}
+
+.icon-button:hover {
+  background: var(--sage);
+}
+
+/* =========================
+   NAVIGASI HALAMAN
+========================= */
+
+.page {
+  display: none;
+  animation: fadeIn 0.25s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =========================
+   HERO / BANNER BERANDA
+========================= */
+
+.hero {
+  min-height: 290px;
+  overflow: hidden;
+  border-radius: 22px;
+  background: var(--sage);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-bottom: 28px;
+}
+
+.hero-copy {
+  padding: 40px;
+  align-self: center;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+h1,
+h2,
+h3 {
+  color: var(--green-dark);
+}
+
+h1 {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(30px, 4vw, 47px);
+  line-height: 1.13;
+  margin-bottom: 15px;
+}
+
+.hero-copy p {
+  line-height: 1.8;
+  color: #536653;
+  margin-bottom: 22px;
+  font-size: 14px;
+}
+
+.hero-image {
+  min-height: 290px;
+  background:
+    linear-gradient(90deg, var(--sage), transparent 40%),
+    url("https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1200&q=85")
+    center / cover;
+}
+
+/* =========================
+   TOMBOL
+========================= */
+
+.btn {
+  border: 0;
+  border-radius: 10px;
+  background: var(--green);
+  color: white;
+  padding: 12px 18px;
+  font-weight: 600;
+  display: inline-block;
+  text-align: center;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--green-dark);
+  transform: translateY(-1px);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-light {
+  background: white;
+  color: var(--green);
+  border: 1px solid var(--border);
+}
+
+.btn-light:hover {
+  background: #f1f3e9;
+  color: var(--green-dark);
+}
+
+.btn-small {
+  padding: 9px 12px;
+  font-size: 12px;
+}
+
+button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+/* =========================
+   JUDUL SECTION
+========================= */
+
+.section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 30px 0 16px;
+}
+
+.section-head h2 {
+  font-size: 23px;
+  line-height: 1.35;
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+/* =========================
+   KATEGORI PRODUK
+========================= */
+
+.categories {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(65px, 1fr));
+  gap: 12px;
+}
+
+.category {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  padding: 13px 5px;
+  text-align: center;
+  color: var(--text);
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.category:hover,
+.category.active {
+  background: white;
+  border-color: #b7c9ae;
+}
+
+.category-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: #e5eadb;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 9px;
+  font-size: 22px;
+}
+
+.category span:last-child {
+  font-size: 12px;
+}
+
+/* =========================
+   GRID PRODUK
+========================= */
+
+.products {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.product-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  min-width: 0;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px #173b2910;
+}
+
+.product-image {
+  position: relative;
+  height: 230px;
+  background: #e9e7dd;
+  overflow: hidden;
+}
+
+.product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-image img {
+  transform: scale(1.04);
+}
+
+.tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background: #f4f0df;
+  color: var(--green);
+  border-radius: 6px;
+  font-size: 10px;
+  padding: 6px 8px;
+  font-weight: 700;
+}
+
+.product-info {
+  padding: 14px;
+}
+
+.product-info h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  line-height: 1.5;
+}
+
+.product-info .muted {
+  margin-bottom: 10px;
+}
+
+.price {
+  color: var(--green);
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.old-price {
+  color: #9c9d93;
+  font-size: 11px;
+  text-decoration: line-through;
+  margin-left: 5px;
+}
+
+.rating {
+  font-size: 11px;
+  color: #a47726;
+  margin: 8px 0 12px;
+}
+
+.product-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.product-actions button {
+  flex: 1;
+  min-width: 0;
+}
+
+/* =========================
+   BANNER PROMOSI
+========================= */
+
+.promo {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  overflow: hidden;
+  border-radius: 20px;
+  background: var(--green);
+  color: white;
+  margin-top: 32px;
+  min-height: 225px;
+}
+
+.promo-copy {
+  padding: 32px;
+  align-self: center;
+}
+
+.promo h2 {
+  color: white;
+  font-family: "Playfair Display", serif;
+  font-size: 30px;
+  line-height: 1.25;
+  margin-bottom: 12px;
+}
+
+.promo p {
+  line-height: 1.7;
+  color: #e2e9db;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.promo-image {
+  background:
+    url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=85")
+    center / cover;
+  min-height: 225px;
+}
+
+/* =========================
+   KEUNGGULAN REWEAR
+========================= */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-top: 22px;
+}
+
+.feature {
+  padding: 18px;
+  border: 1px solid var(--border);
+  background: var(--white);
+  border-radius: 14px;
+  transition: box-shadow 0.2s ease;
+}
+
+.feature:hover {
+  box-shadow: 0 8px 20px #173b290c;
+}
+
+.feature strong {
+  display: block;
+  margin: 8px 0;
+  color: var(--green);
+}
+
+.feature p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+/* =========================
+   PANEL / KONTEN UMUM
+========================= */
+
+.panel {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px;
+  margin-bottom: 16px;
+}
+
+.panel h2 {
+  margin-bottom: 18px;
+}
+
+.panel h3 {
+  font-size: 17px;
+}
+
+/* =========================
+   FORM JUAL BARANG
+========================= */
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.field {
+  margin-bottom: 15px;
+}
+
+.field label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 7px;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: white;
+  color: var(--text);
+  outline-color: #789679;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #789679;
+}
+
+.field textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.upload-box {
+  border: 2px dashed #bdcbb7;
+  background: #f7f8f1;
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.upload-box input {
+  max-width: 100%;
+  margin-top: 12px;
+}
+
+.preview-image {
+  width: 110px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin: 12px auto 0;
+}
+
+/* =========================
+   KERANJANG BELANJA
+========================= */
+
+.cart-row,
+.order-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid var(--border);
+  padding: 14px 0;
+}
+
+.cart-row:last-child,
+.order-row:last-child {
+  border-bottom: 0;
+}
+
+.mini-image {
+  width: 75px;
+  height: 85px;
+  object-fit: cover;
+  border-radius: 9px;
+  background: #e9e7dd;
+  flex-shrink: 0;
+}
+
+.grow {
+  flex: 1;
+  min-width: 0;
+}
+
+.grow h3 {
+  font-size: 14px;
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
+
+.quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.quantity button {
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 6px;
+  padding: 3px 9px;
+  color: var(--green);
+}
+
+.quantity button:hover {
+  background: var(--sage);
+}
+
+.total-line {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 12px 0;
+  font-size: 14px;
+}
+
+.total-line.final {
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--green);
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* =========================
+   STATUS PESANAN
+========================= */
+
+.status {
+  display: inline-block;
+  border-radius: 20px;
+  background: #e5eddf;
+  color: var(--green);
+  font-size: 11px;
+  padding: 6px 10px;
+  font-weight: 700;
+}
+
+.status.shipped {
+  background: #e4ebf8;
+  color: #355b92;
+}
+
+.status.done {
+  background: #e0f0df;
+  color: #28713b;
+}
+
+/* =========================
+   TAB PESANAN
+========================= */
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.tab {
+  border: 1px solid var(--border);
+  background: white;
+  border-radius: 20px;
+  padding: 9px 14px;
+  font-size: 12px;
+  color: var(--text);
+  transition: all 0.2s ease;
+}
+
+.tab:hover {
+  border-color: var(--green);
+}
+
+.tab.active {
+  background: var(--green);
+  color: white;
+  border-color: var(--green);
+}
+
+/* =========================
+   INFORMASI PENGIRIMAN
+========================= */
+
+.tracking-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  margin: 28px 0;
+  text-align: center;
+}
+
+.step {
+  border-top: 3px solid #d6d9ce;
+  padding: 14px 5px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.step.done {
+  border-color: var(--green);
+  color: var(--green);
+  font-weight: 700;
+}
+
+.notice {
+  background: #edf2e6;
+  padding: 17px;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  line-height: 1.7;
+}
+
+/* =========================
+   TAMPILAN KOSONG
+========================= */
+
+.empty {
+  padding: 35px 10px;
+  text-align: center;
+  color: var(--muted);
+  line-height: 1.8;
+}
+
+.empty .btn {
+  margin-top: 10px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer {
+  text-align: center;
+  padding: 30px 10px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+/* =========================
+   RESPONSIVE TABLET
+========================= */
+
+@media (max-width: 1100px) {
+  .sidebar {
+    width: 190px;
+  }
+
+  .main {
+    margin-left: 190px;
+    padding: 20px;
+  }
+
+  .products {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .categories {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .product-image {
+    height: 210px;
+  }
+}
+
+/* =========================
+   RESPONSIVE HP
+========================= */
+
+@media (max-width: 700px) {
+  .sidebar {
+    position: fixed;
+    inset: auto 0 0;
+    width: 100%;
+    height: 68px;
+    padding: 6px;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 0 -4px 18px #173b2910;
+  }
+
+  .logo,
+  .sidebar-note {
+    display: none;
+  }
+
+  .nav-link {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    padding: 9px 4px;
+    margin: 0;
+    text-align: center;
+    font-size: 10px;
+    white-space: nowrap;
+  }
+
+  .main {
+    margin: 0;
+    padding: 16px 12px 90px;
+  }
+
+  .topbar {
+    gap: 8px;
+  }
+
+  .top-actions {
+    gap: 6px;
+  }
+
+  .top-actions .user-label {
+    display: none;
+  }
+
+  .icon-button {
+    padding: 10px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-copy {
+    padding: 28px 22px;
+  }
+
+  .hero-image {
+    min-height: 170px;
+    background:
+      linear-gradient(180deg, var(--sage), transparent 30%),
+      url("https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=900&q=80")
+      center / cover;
+  }
+
+  .products {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .product-image {
+    height: 185px;
+  }
+
+  .product-info {
+    padding: 10px;
+  }
+
+  .product-info h3 {
+    font-size: 12px;
+  }
+
+  .product-info .muted {
+    font-size: 11px;
+  }
+
+  .price {
+    font-size: 14px;
+  }
+
+  .old-price {
+    font-size: 10px;
+    margin-left: 2px;
+  }
+
+  .product-actions {
+    gap: 5px;
+  }
+
+  .product-actions .btn {
+    padding: 8px 5px;
+    font-size: 10px;
+  }
+
+  .categories {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  .category {
+    padding: 10px 3px;
+  }
+
+  .category-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 19px;
+  }
+
+  .category span:last-child {
+    font-size: 11px;
+  }
+
+  .promo {
+    grid-template-columns: 1fr;
+  }
+
+  .promo-copy {
+    padding: 25px;
+  }
+
+  .promo-image {
+    min-height: 170px;
+  }
+
+  .feature-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .cart-row,
+  .order-row {
+    gap: 10px;
+  }
+
+  .mini-image {
+    width: 58px;
+    height: 70px;
+  }
+
+  .tracking-steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .step {
+    font-size: 10px;
+    overflow-wrap: anywhere;
+  }
+
+  .section-head h2 {
+    font-size: 19px;
+  }
+
+  .total-line.final {
+    font-size: 16px;
+  }
+}
+
+/* =========================
+   RESPONSIVE HP KECIL
+========================= */
+
+@media (max-width: 380px) {
+  .main {
+    padding-left: 9px;
+    padding-right: 9px;
+  }
+
+  .product-image {
+    height: 155px;
+  }
+
+  .product-info {
+    padding: 8px;
+  }
+
+  .product-actions {
+    flex-direction: column;
+  }
+
+  .nav-link {
+    font-size: 9px;
+  }
+
+  .hero-copy h1 {
+    font-size: 30px;
+  }
+}
+
+/* =========================
+   PENGURANGAN ANIMASI
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
