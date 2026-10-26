@@ -1,0 +1,951 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ReWear, marketplace pakaian preloved yang stylish, terjangkau, dan ramah lingkungan.">
+  <title>ReWear — Preloved Fashion Marketplace</title>
+
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --green: #214d36;
+      --green-dark: #173b29;
+      --sage: #dce6d2;
+      --cream: #f8f5ec;
+      --white: #fffefa;
+      --text: #24352a;
+      --muted: #7c847b;
+      --border: #e7e5da;
+      --radius: 16px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "DM Sans", sans-serif;
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .layout { min-height: 100vh; }
+
+    .sidebar {
+      width: 225px;
+      background: var(--green-dark);
+      color: white;
+      padding: 25px 16px;
+      position: fixed;
+      inset: 0 auto 0 0;
+      display: flex;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .logo {
+      font-family: "Playfair Display", serif;
+      font-size: 27px;
+      font-weight: 700;
+      margin: 0 8px 32px;
+    }
+
+    .logo span { color: #c5d8a9; }
+
+    .nav-link {
+      display: block;
+      color: #e4eade;
+      background: transparent;
+      border: 0;
+      width: 100%;
+      padding: 13px 14px;
+      text-align: left;
+      border-radius: 10px;
+      margin-bottom: 5px;
+      font-size: 14px;
+    }
+
+    .nav-link:hover, .nav-link.active {
+      background: #42664b;
+      color: white;
+    }
+
+    .sidebar-note {
+      margin-top: auto;
+      background: #31553b;
+      border-radius: 14px;
+      padding: 18px;
+      line-height: 1.6;
+      font-size: 12px;
+      color: #e9efdf;
+    }
+
+    .sidebar-note strong {
+      display: block;
+      font-size: 15px;
+      margin-bottom: 7px;
+    }
+
+    .main { margin-left: 225px; padding: 24px 30px 45px; }
+
+    .topbar {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .search {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 0 14px;
+    }
+
+    .search input {
+      border: 0;
+      outline: 0;
+      width: 100%;
+      padding: 13px 8px;
+      background: transparent;
+    }
+
+    .top-actions { display: flex; align-items: center; gap: 12px; }
+
+    .icon-button {
+      border: 1px solid var(--border);
+      background: white;
+      padding: 10px 13px;
+      border-radius: 10px;
+      color: var(--green);
+    }
+
+    .page { display: none; }
+    .page.active { display: block; }
+
+    .hero {
+      min-height: 290px;
+      overflow: hidden;
+      border-radius: 22px;
+      background: var(--sage);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      margin-bottom: 28px;
+    }
+
+    .hero-copy {
+      padding: 40px;
+      align-self: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h1, h2, h3 { color: var(--green-dark); }
+    h1 {
+      font-family: "Playfair Display", serif;
+      font-size: clamp(30px, 4vw, 47px);
+      line-height: 1.13;
+      margin-bottom: 15px;
+    }
+
+    .hero-copy p { line-height: 1.8; color: #536653; margin-bottom: 22px; }
+
+    .hero-image {
+      min-height: 290px;
+      background:
+        linear-gradient(90deg, var(--sage), transparent 40%),
+        url("https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1200&q=85")
+        center/cover;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      background: var(--green);
+      color: white;
+      padding: 12px 18px;
+      font-weight: 600;
+      display: inline-block;
+    }
+
+    .btn:hover { background: var(--green-dark); }
+    .btn-light { background: white; color: var(--green); border: 1px solid var(--border); }
+    .btn-small { padding: 9px 12px; font-size: 12px; }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 30px 0 16px;
+    }
+
+    .section-head h2 { font-size: 23px; }
+    .muted { color: var(--muted); font-size: 13px; }
+
+    .categories {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(65px, 1fr));
+      gap: 12px;
+    }
+
+    .category {
+      background: transparent;
+      border: 1px solid transparent;
+      border-radius: 14px;
+      padding: 13px 5px;
+      text-align: center;
+      color: var(--text);
+    }
+
+    .category:hover, .category.active {
+      background: white;
+      border-color: #b7c9ae;
+    }
+
+    .category-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #e5eadb;
+      display: grid;
+      place-items: center;
+      margin: 0 auto 9px;
+      font-size: 22px;
+    }
+
+    .category span:last-child { font-size: 12px; }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .product-card {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px #173b2910;
+    }
+
+    .product-image {
+      position: relative;
+      height: 230px;
+      background: #e9e7dd;
+      overflow: hidden;
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s;
+    }
+
+    .product-card:hover .product-image img { transform: scale(1.04); }
+
+    .tag {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: #f4f0df;
+      color: var(--green);
+      border-radius: 6px;
+      font-size: 10px;
+      padding: 6px 8px;
+      font-weight: 700;
+    }
+
+    .product-info { padding: 14px; }
+    .product-info h3 { font-size: 14px; margin-bottom: 6px; }
+    .product-info .muted { margin-bottom: 10px; }
+    .price { color: var(--green); font-size: 16px; font-weight: 700; }
+    .old-price { color: #9c9d93; font-size: 11px; text-decoration: line-through; margin-left: 5px; }
+    .rating { font-size: 11px; color: #a47726; margin: 8px 0 12px; }
+    .product-actions { display: flex; gap: 7px; }
+    .product-actions button { flex: 1; }
+
+    .promo {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      border-radius: 20px;
+      background: var(--green);
+      color: white;
+      margin-top: 32px;
+      min-height: 225px;
+    }
+
+    .promo-copy { padding: 32px; align-self: center; }
+    .promo h2 { color: white; font-family: "Playfair Display", serif; font-size: 30px; margin-bottom: 12px; }
+    .promo p { line-height: 1.7; color: #e2e9db; margin-bottom: 18px; }
+    .promo-image {
+      background: url("https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1000&q=85") center/cover;
+      min-height: 225px;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .feature {
+      padding: 18px;
+      border: 1px solid var(--border);
+      background: var(--white);
+      border-radius: 14px;
+    }
+
+    .feature strong { display: block; margin: 8px 0; color: var(--green); }
+    .feature p { color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+    .panel {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .panel h2 { margin-bottom: 18px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .field { margin-bottom: 15px; }
+    .field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 7px; }
+    .field input, .field select, .field textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: white;
+      outline-color: #789679;
+    }
+
+    .field textarea { min-height: 100px; resize: vertical; }
+
+    .upload-box {
+      border: 2px dashed #bdcbb7;
+      background: #f7f8f1;
+      border-radius: 12px;
+      padding: 24px;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .upload-box input { max-width: 100%; margin-top: 12px; }
+    .preview-image { width: 110px; height: 110px; object-fit: cover; border-radius: 10px; margin: 12px auto 0; }
+
+    .cart-row, .order-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+
+    .cart-row:last-child, .order-row:last-child { border-bottom: 0; }
+    .mini-image { width: 75px; height: 85px; object-fit: cover; border-radius: 9px; background: #e9e7dd; }
+    .grow { flex: 1; }
+    .grow h3 { font-size: 14px; margin-bottom: 6px; }
+    .quantity { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
+    .quantity button { border: 1px solid var(--border); background: white; border-radius: 6px; padding: 3px 9px; }
+    .total-line { display: flex; justify-content: space-between; margin: 12px 0; }
+    .total-line.final { font-weight: 700; font-size: 18px; color: var(--green); padding-top: 12px; border-top: 1px solid var(--border); }
+
+    .status {
+      display: inline-block;
+      border-radius: 20px;
+      background: #e5eddf;
+      color: var(--green);
+      font-size: 11px;
+      padding: 6px 10px;
+      font-weight: 700;
+    }
+
+    .status.shipped { background: #e4ebf8; color: #355b92; }
+    .status.done { background: #e0f0df; color: #28713b; }
+
+    .tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+    .tab { border: 1px solid var(--border); background: white; border-radius: 20px; padding: 9px 14px; font-size: 12px; }
+    .tab.active { background: var(--green); color: white; border-color: var(--green); }
+
+    .tracking-steps { display: grid; grid-template-columns: repeat(4, 1fr); margin: 28px 0; text-align: center; }
+    .step { border-top: 3px solid #d6d9ce; padding: 14px 5px; font-size: 12px; color: var(--muted); }
+    .step.done { border-color: var(--green); color: var(--green); font-weight: 700; }
+    .notice { background: #edf2e6; padding: 17px; border-radius: 12px; margin-bottom: 18px; line-height: 1.7; }
+    .empty { padding: 35px 10px; text-align: center; color: var(--muted); }
+
+    footer { text-align: center; padding: 30px 10px; color: var(--muted); font-size: 12px; }
+
+    @media (max-width: 1100px) {
+      .sidebar { width: 190px; }
+      .main { margin-left: 190px; padding: 20px; }
+      .products { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .categories { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    @media (max-width: 700px) {
+      .sidebar {
+        inset: auto 0 0;
+        width: 100%;
+        height: 68px;
+        padding: 6px;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+      }
+
+      .logo, .sidebar-note { display: none; }
+      .nav-link { width: auto; padding: 9px 8px; margin: 0; text-align: center; font-size: 10px; }
+      .main { margin: 0; padding: 16px 12px 90px; }
+      .topbar { gap: 8px; }
+      .top-actions .user-label { display: none; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-copy { padding: 28px 22px; }
+      .hero-image { min-height: 170px; }
+      .products { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .product-image { height: 185px; }
+      .product-info { padding: 10px; }
+      .product-info h3 { font-size: 12px; }
+      .price { font-size: 14px; }
+      .categories { grid-template-columns: repeat(4, 1fr); gap: 5px; }
+      .category-icon { width: 42px; height: 42px; }
+      .promo { grid-template-columns: 1fr; }
+      .promo-copy { padding: 25px; }
+      .promo-image { min-height: 170px; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .form-grid { grid-template-columns: 1fr; gap: 0; }
+      .cart-row, .order-row { gap: 10px; }
+      .mini-image { width: 58px; height: 70px; }
+      .tracking-steps { font-size: 10px; }
+      .section-head h2 { font-size: 19px; }
+    }
+  </style>
+</head>
+
+<body>
+<div class="layout">
+  <aside class="sidebar">
+    <div class="logo">♧ Re<span>Wear</span></div>
+
+    <button class="nav-link active" data-page="home">⌂ &nbsp; Beranda</button>
+    <button class="nav-link" data-page="orders">▤ &nbsp; Pesanan</button>
+    <button class="nav-link" data-page="cart">🛒 &nbsp; Keranjang <span id="cart-count">0</span></button>
+    <button class="nav-link" data-page="sell">＋ &nbsp; Jual Barang</button>
+    <button class="nav-link" data-page="shipping">↗ &nbsp; Informasi Pengiriman</button>
+    <button class="nav-link" data-page="profile">♙ &nbsp; Profil</button>
+
+    <div class="sidebar-note">
+      <strong>♧ Pakaian Bekas, Nilai Baru</strong>
+      Dukung gaya hidup berkelanjutan dengan membeli dan menjual pakaian preloved.
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <div class="search">
+        <input id="search" type="search" placeholder="Cari pakaian, merek, atau kategori...">
+        <span>⌕</span>
+      </div>
+      <div class="top-actions">
+        <button class="icon-button" onclick="showPage('cart')" aria-label="Keranjang">🛒</button>
+        <button class="icon-button" onclick="showPage('profile')">♙ <span class="user-label">Pengguna</span></button>
+      </div>
+    </header>
+
+    <!-- BERANDA -->
+    <section class="page active" id="home">
+      <div class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow">Fashion lebih bermakna</div>
+          <h1>Gaya Baru,<br>Tanpa Harus Baru.</h1>
+          <p>Temukan fashion preloved berkualitas dengan harga bersahabat dan pilihan yang lebih ramah lingkungan.</p>
+          <button class="btn" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Belanja Sekarang →</button>
+        </div>
+        <div class="hero-image" role="img" aria-label="Rak pakaian fashion preloved"></div>
+      </div>
+
+      <div class="section-head">
+        <h2>Jelajahi Kategori</h2>
+        <span class="muted">Temukan gaya favoritmu</span>
+      </div>
+
+      <div class="categories" id="categories">
+        <button class="category active" data-category="Semua"><span class="category-icon">✦</span><span>Semua</span></button>
+        <button class="category" data-category="Kaos"><span class="category-icon">👕</span><span>Kaos</span></button>
+        <button class="category" data-category="Kemeja"><span class="category-icon">👔</span><span>Kemeja</span></button>
+        <button class="category" data-category="Hoodie"><span class="category-icon">🧥</span><span>Hoodie</span></button>
+        <button class="category" data-category="Jaket"><span class="category-icon">🧥</span><span>Jaket</span></button>
+        <button class="category" data-category="Celana"><span class="category-icon">👖</span><span>Celana</span></button>
+        <button class="category" data-category="Tas"><span class="category-icon">👜</span><span>Tas</span></button>
+        <button class="category" data-category="Aksesori"><span class="category-icon">🧢</span><span>Aksesori</span></button>
+      </div>
+
+      <div class="section-head" id="catalog">
+        <div>
+          <h2>Rekomendasi Pilihan</h2>
+          <p class="muted">Pilihan preloved untuk menemani harimu.</p>
+        </div>
+        <span class="muted" id="product-count"></span>
+      </div>
+
+      <div class="products" id="products"></div>
+
+      <div class="promo">
+        <div class="promo-copy">
+          <div class="eyebrow" style="color:#d5e3c8">Lebih bijak memilih</div>
+          <h2>More Style.<br>Less Waste.</h2>
+          <p>Pakaian layak pakai mendapat kesempatan baru, sementara kamu mendapatkan gaya yang lebih personal.</p>
+          <button class="btn btn-light" onclick="showPage('sell')">Jual Pakaianmu →</button>
+        </div>
+        <div class="promo-image" role="img" aria-label="Inspirasi gaya fashion berkelanjutan"></div>
+      </div>
+
+      <div class="feature-grid">
+        <div class="feature"><span>♧</span><strong>Pilihan Berkualitas</strong><p>Periksa deskripsi dan kondisi setiap produk sebelum membeli.</p></div>
+        <div class="feature"><span>♡</span><strong>Harga Bersahabat</strong><p>Jelajahi berbagai gaya dengan harga yang lebih terjangkau.</p></div>
+        <div class="feature"><span>🌱</span><strong>Lebih Berkelanjutan</strong><p>Memperpanjang masa pakai pakaian membantu mengurangi limbah tekstil.</p></div>
+      </div>
+    </section>
+
+    <!-- KERANJANG -->
+    <section class="page" id="cart">
+      <div class="section-head"><h2>Keranjang Belanja</h2><span class="muted">Periksa pilihanmu</span></div>
+      <div class="panel">
+        <div id="cart-items"></div>
+        <div id="cart-summary"></div>
+      </div>
+    </section>
+
+    <!-- PESANAN -->
+    <section class="page" id="orders">
+      <div class="section-head"><h2>Pesanan Saya</h2></div>
+      <div class="tabs" id="order-tabs">
+        <button class="tab active" data-status="Semua">Semua</button>
+        <button class="tab" data-status="Dikemas">Dikemas</button>
+        <button class="tab" data-status="Dikirim">Dikirim</button>
+        <button class="tab" data-status="Selesai">Selesai</button>
+      </div>
+      <div class="panel" id="order-list"></div>
+    </section>
+
+    <!-- PENGIRIMAN -->
+    <section class="page" id="shipping">
+      <div class="section-head"><h2>Informasi Pengiriman</h2></div>
+      <div class="panel">
+        <h3>Status Pengiriman</h3>
+        <p class="muted" style="margin-top:8px">Perkembangan pesanan demo ditampilkan di sini.</p>
+        <div class="tracking-steps">
+          <div class="step done">✓<br>Dikemas</div>
+          <div class="step">②<br>Dikirim</div>
+          <div class="step">③<br>Dalam Perjalanan</div>
+          <div class="step">④<br>Sampai</div>
+        </div>
+        <div class="notice">
+          <strong>Informasi pengiriman</strong><br>
+          Nomor resi contoh: RW-DEMO-12345<br>
+          Status pengiriman akan diperbarui berdasarkan data pesanan demo.
+        </div>
+        <p class="muted">Catatan: situs demo ini belum terhubung ke jasa kurir sungguhan.</p>
+      </div>
+    </section>
+
+    <!-- JUAL BARANG -->
+    <section class="page" id="sell">
+      <div class="section-head"><h2>Jual Barang</h2></div>
+      <form class="panel" id="sell-form">
+        <div class="form-grid">
+          <div class="field">
+            <label for="item-name">Nama Produk</label>
+            <input id="item-name" required placeholder="Contoh: Kemeja Vintage">
+          </div>
+          <div class="field">
+            <label for="item-category">Kategori</label>
+            <select id="item-category" required>
+              <option value="">Pilih kategori</option>
+              <option>Kaos</option><option>Kemeja</option><option>Hoodie</option>
+              <option>Jaket</option><option>Celana</option><option>Tas</option><option>Aksesori</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="item-condition">Kondisi</label>
+            <select id="item-condition" required>
+              <option value="">Pilih kondisi</option>
+              <option>Seperti Baru</option><option>Sangat Baik</option><option>Baik</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="item-price">Harga (Rp)</label>
+            <input id="item-price" type="number" min="1000" required placeholder="75000">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="item-description">Deskripsi Produk</label>
+          <textarea id="item-description" placeholder="Tuliskan ukuran, warna, bahan, dan kondisi produk..."></textarea>
+        </div>
+
+        <div class="field">
+          <label for="item-image">Foto Produk</label>
+          <div class="upload-box">
+            <p>📷 Pilih foto pakaianmu</p>
+            <p class="muted">Gunakan foto yang jelas dan menunjukkan kondisi barang sebenarnya.</p>
+            <input id="item-image" type="file" accept="image/*">
+            <img id="image-preview" class="preview-image" alt="Pratinjau foto produk" hidden>
+          </div>
+        </div>
+
+        <button class="btn" type="submit">＋ Tambahkan Produk</button>
+      </form>
+    </section>
+
+    <!-- PROFIL -->
+    <section class="page" id="profile">
+      <div class="section-head"><h2>Profil Pengguna</h2></div>
+      <div class="panel">
+        <h3>Selamat datang di ReWear!</h3>
+        <p class="muted" style="margin:12px 0 20px">Kelola aktivitas belanja dan penjualan pakaian preloved melalui menu yang tersedia.</p>
+        <button class="btn" onclick="showPage('orders')">Lihat Pesanan</button>
+        <button class="btn btn-light" onclick="showPage('sell')">Jual Barang</button>
+      </div>
+    </section>
+
+    <footer>© 2026 ReWear · More Style, Less Waste 🌱</footer>
+  </main>
+</div>
+
+<script>
+  const photo = (id, width = 700) =>
+    `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=80`;
+
+  const products = [
+    {id:1, name:"Kaos Oversize", category:"Kaos", price:75000, old:120000, condition:"Sangat Baik", rating:"4.8", image:photo("photo-1521572163474-6864f9cf17ab")},
+    {id:2, name:"Kemeja Flanel Vintage", category:"Kemeja", price:95000, old:150000, condition:"Baik", rating:"4.7", image:photo("photo-1598033129183-c4f50c736f10")},
+    {id:3, name:"Hoodie Hijau", category:"Hoodie", price:120000, old:180000, condition:"Sangat Baik", rating:"4.9", image:photo("photo-1556821840-3a63f95609a7")},
+    {id:4, name:"Jaket Denim", category:"Jaket", price:150000, old:220000, condition:"Baik", rating:"4.8", image:photo("photo-1543076447-215ad9ba6923")},
+    {id:5, name:"Celana Denim", category:"Celana", price:110000, old:175000, condition:"Sangat Baik", rating:"4.8", image:photo("photo-1542272604-787c3835535d")},
+    {id:6, name:"Tas Kanvas", category:"Tas", price:65000, old:100000, condition:"Baik", rating:"4.6", image:photo("photo-1544816155-12df9643f363")},
+    {id:7, name:"Kemeja Linen", category:"Kemeja", price:85000, old:135000, condition:"Seperti Baru", rating:"4.9", image:photo("photo-1603252109303-2751441dd157")},
+    {id:8, name:"Jaket Kasual", category:"Jaket", price:135000, old:200000, condition:"Baik", rating:"4.7", image:photo("photo-1551028719-00167b16eac5")}
+  ];
+
+  let cart = JSON.parse(localStorage.getItem("rewear-cart") || "[]");
+  let orders = JSON.parse(localStorage.getItem("rewear-orders") || "[]");
+  let activeCategory = "Semua";
+  let activeOrderStatus = "Semua";
+  let uploadedPhoto = "";
+
+  const rupiah = value => new Intl.NumberFormat("id-ID", {
+    style:"currency", currency:"IDR", maximumFractionDigits:0
+  }).format(value);
+
+  function saveData() {
+    localStorage.setItem("rewear-cart", JSON.stringify(cart));
+    localStorage.setItem("rewear-orders", JSON.stringify(orders));
+  }
+
+  function showPage(page) {
+    document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
+    document.getElementById(page).classList.add("active");
+    document.querySelectorAll(".nav-link").forEach(el =>
+      el.classList.toggle("active", el.dataset.page === page)
+    );
+    if (page === "cart") renderCart();
+    if (page === "orders") renderOrders();
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  document.querySelectorAll(".nav-link").forEach(button =>
+    button.addEventListener("click", () => showPage(button.dataset.page))
+  );
+
+  function renderProducts() {
+    const query = document.getElementById("search").value.toLowerCase().trim();
+    const filtered = products.filter(product =>
+      (activeCategory === "Semua" || product.category === activeCategory) &&
+      `${product.name} ${product.category}`.toLowerCase().includes(query)
+    );
+
+    document.getElementById("product-count").textContent = `${filtered.length} produk`;
+    document.getElementById("products").innerHTML = filtered.length
+      ? filtered.map(product => `
+        <article class="product-card">
+          <div class="product-image">
+            <img src="${product.image}" alt="${product.name}" loading="lazy">
+            <span class="tag">PRELOVED</span>
+          </div>
+          <div class="product-info">
+            <h3>${escapeHTML(product.name)}</h3>
+            <p class="muted">${escapeHTML(product.condition)} · ${escapeHTML(product.category)}</p>
+            <div><span class="price">${rupiah(product.price)}</span>
+              <span class="old-price">${rupiah(product.old || product.price)}</span>
+            </div>
+            <div class="rating">★ ${product.rating} · Pilihan preloved</div>
+            <div class="product-actions">
+              <button class="btn btn-small" onclick="addToCart(${product.id})">+ Keranjang</button>
+              <button class="btn btn-small btn-light" onclick="buyNow(${product.id})">Beli</button>
+            </div>
+          </div>
+        </article>`).join("")
+      : '<div class="empty">Produk tidak ditemukan. Coba kata kunci lain.</div>';
+  }
+
+  function escapeHTML(text) {
+    return String(text).replace(/[&<>"']/g, char => ({
+      "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#039;"
+    }[char]));
+  }
+
+  document.getElementById("search").addEventListener("input", renderProducts);
+
+  document.querySelectorAll(".category").forEach(button => {
+    button.addEventListener("click", () => {
+      activeCategory = button.dataset.category;
+      document.querySelectorAll(".category").forEach(el =>
+        el.classList.toggle("active", el === button)
+      );
+      renderProducts();
+    });
+  });
+
+  function addToCart(id) {
+    const product = products.find(item => item.id === id);
+    const found = cart.find(item => item.id === id);
+    if (found) found.qty++;
+    else cart.push({...product, qty:1});
+    saveData();
+    updateCartCount();
+    alert(`${product.name} ditambahkan ke keranjang.`);
+  }
+
+  function buyNow(id) {
+    addToCart(id);
+    showPage("cart");
+  }
+
+  function updateCartCount() {
+    document.getElementById("cart-count").textContent =
+      cart.reduce((sum, item) => sum + item.qty, 0);
+  }
+
+  function changeQty(id, amount) {
+    const item = cart.find(product => product.id === id);
+    if (!item) return;
+    item.qty += amount;
+    if (item.qty <= 0) cart = cart.filter(product => product.id !== id);
+    saveData();
+    updateCartCount();
+    renderCart();
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    saveData();
+    updateCartCount();
+    renderCart();
+  }
+
+  function renderCart() {
+    const container = document.getElementById("cart-items");
+    const summary = document.getElementById("cart-summary");
+
+    if (!cart.length) {
+      container.innerHTML = '<div class="empty">Keranjangmu masih kosong 🛍️<br><br><button class="btn" onclick="showPage(\'home\')">Mulai Belanja</button></div>';
+      summary.innerHTML = "";
+      return;
+    }
+
+    container.innerHTML = cart.map(item => `
+      <div class="cart-row">
+        <img class="mini-image" src="${item.image}" alt="${escapeHTML(item.name)}">
+        <div class="grow">
+          <h3>${escapeHTML(item.name)}</h3>
+          <div class="price">${rupiah(item.price)}</div>
+          <div class="quantity">
+            <button onclick="changeQty(${item.id},-1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${item.id},1)">+</button>
+          </div>
+        </div>
+        <button class="icon-button" onclick="removeFromCart(${item.id})" aria-label="Hapus produk">✕</button>
+      </div>`).join("");
+
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    const shipping = 15000;
+
+    summary.innerHTML = `
+      <div class="total-line"><span>Subtotal</span><span>${rupiah(subtotal)}</span></div>
+      <div class="total-line"><span>Ongkos kirim (simulasi)</span><span>${rupiah(shipping)}</span></div>
+      <div class="total-line final"><span>Total</span><span>${rupiah(subtotal + shipping)}</span></div>
+      <button class="btn" style="width:100%;margin-top:12px" onclick="checkout()">Buat Pesanan</button>
+      <p class="muted" style="margin-top:10px">Checkout ini hanya simulasi, belum memproses pembayaran nyata.</p>`;
+  }
+
+  function checkout() {
+    if (!cart.length) return;
+    const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+    orders.unshift({
+      id:"RW" + Date.now().toString().slice(-8),
+      date:new Date().toLocaleDateString("id-ID"),
+      items:cart.map(item => ({...item})),
+      total:subtotal + 15000,
+      status:"Dikemas"
+    });
+    cart = [];
+    saveData();
+    updateCartCount();
+    renderCart();
+    renderOrders();
+    showPage("orders");
+    alert("Pesanan demo berhasil dibuat!");
+  }
+
+  function renderOrders() {
+    const filtered = orders.filter(order =>
+      activeOrderStatus === "Semua" || order.status === activeOrderStatus
+    );
+    const container = document.getElementById("order-list");
+
+    document.querySelectorAll("#order-tabs .tab").forEach(tab =>
+      tab.classList.toggle("active", tab.dataset.status === activeOrderStatus)
+    );
+
+    if (!filtered.length) {
+      container.innerHTML = '<div class="empty">Belum ada pesanan pada kategori ini.</div>';
+      return;
+    }
+
+    container.innerHTML = filtered.map(order => {
+      const first = order.items[0];
+      const statusClass = order.status === "Dikirim" ? "shipped" :
+                          order.status === "Selesai" ? "done" : "";
+      const nextStatus = order.status === "Dikemas" ? "Dikirim" :
+                         order.status === "Dikirim" ? "Selesai" : null;
+
+      return `
+        <div class="order-row">
+          <img class="mini-image" src="${first.image}" alt="${escapeHTML(first.name)}">
+          <div class="grow">
+            <h3>Pesanan #${order.id}</h3>
+            <p class="muted">${order.date} · ${order.items.length} jenis produk</p>
+            <p class="price" style="margin:7px 0">${rupiah(order.total)}</p>
+            <span class="status ${statusClass}">${order.status}</span>
+          </div>
+          <div>
+            ${nextStatus ? `<button class="btn btn-small" onclick="advanceOrder('${order.id}')">Simulasikan: ${nextStatus}</button>` : '<span class="muted">Pesanan selesai</span>'}
+          </div>
+        </div>`;
+    }).join("");
+  }
+
+  function advanceOrder(id) {
+    const order = orders.find(item => item.id === id);
+    if (!order) return;
+    order.status = order.status === "Dikemas" ? "Dikirim" : "Selesai";
+    saveData();
+    renderOrders();
+    alert(`Status pesanan diperbarui menjadi ${order.status}.`);
+  }
+
+  document.querySelectorAll("#order-tabs .tab").forEach(button => {
+    button.addEventListener("click", () => {
+      activeOrderStatus = button.dataset.status;
+      renderOrders();
+    });
+  });
+
+  document.getElementById("item-image").addEventListener("change", event => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Silakan pilih file gambar.");
+      event.target.value = "";
+      return;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert("Ukuran foto maksimal 3 MB.");
+      event.target.value = "";
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      uploadedPhoto = reader.result;
+      const preview = document.getElementById("image-preview");
+      preview.src = uploadedPhoto;
+      preview.hidden = false;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.getElementById("sell-form").addEventListener("submit", event => {
+    event.preventDefault();
+
+    const name = document.getElementById("item-name").value.trim();
+    const category = document.getElementById("item-category").value;
+    const condition = document.getElementById("item-condition").value;
+    const price = Number(document.getElementById("item-price").value);
+    const description = document.getElementById("item-description").value.trim();
+
+    if (!name || !category || !condition || price < 1000) {
+      alert("Periksa kembali data produk.");
+      return;
+    }
+
+    products.unshift({
+      id:Date.now(),
+      name,
+      category,
+      price,
+      old:price,
+      condition,
+      rating:"Baru",
+      description,
+      image:uploadedPhoto || photo("photo-1445205170230-053b83016050")
+    });
+
+    renderProducts();
+    event.target.reset();
+    uploadedPhoto = "";
+    document.getElementById("image-preview").hidden = true;
+    alert("Produk ditambahkan ke katalog demo.");
+    showPage("home");
+  });
+
+  renderProducts();
+  renderCart();
+  renderOrders();
+  updateCartCount();
+</script>
+</body>
+</html>
