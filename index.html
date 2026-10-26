@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ReWear — marketplace pakaian preloved yang masih layak pakai." />
+  <title>ReWear — Preloved Fashion Marketplace</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#beranda" data-page="beranda" aria-label="ReWear Beranda">
+      <span class="brand-mark">R</span><span>Re<span class="brand-accent">Wear</span></span>
+    </a>
+    <form class="search" id="searchForm" role="search">
+      <span aria-hidden="true">⌕</span>
+      <input id="searchInput" type="search" placeholder="Cari kaus, hoodie, jeans, tas..." aria-label="Cari produk" />
+      <button type="submit">Cari</button>
+    </form>
+    <button class="mobile-menu" id="mobileMenuBtn" aria-label="Buka menu">☰</button>
+    <div class="header-actions">
+      <button class="icon-btn" data-page="keranjang" aria-label="Keranjang">🛒 <span class="cart-count" id="cartCount">0</span></button>
+      <button class="sell-btn" data-page="jual">＋ Jual Barang</button>
+    </div>
+  </header>
+
+  <div class="app-layout">
+    <aside class="sidebar" id="sidebar">
+      <p class="side-label">MENU UTAMA</p>
+      <nav class="side-nav" aria-label="Navigasi utama">
+        <button class="nav-item active" data-page="beranda"><span>⌂</span> Beranda</button>
+        <button class="nav-item" data-page="kategori"><span>▦</span> Kategori</button>
+        <button class="nav-item" data-page="keranjang"><span>🛒</span> Keranjang <b id="sideCartCount">0</b></button>
+        <button class="nav-item" data-page="pesanan"><span>▤</span> Pesanan Saya</button>
+        <button class="nav-item" data-page="pengiriman"><span>↗</span> Dikemas & Dikirim</button>
+        <button class="nav-item" data-page="jual"><span>＋</span> Jual Barang</button>
+      </nav>
+      <div class="sidebar-note">
+        <span class="leaf">✳</span>
+        <strong>Fashion lebih berkelanjutan</strong>
+        <p>Temukan barang baru untukmu, tanpa harus selalu membeli yang baru.</p>
+      </div>
+      <div class="sidebar-bottom">© 2026 ReWear<br /><span>Reuse your style.</span></div>
+    </aside>
+
+    <main class="main-content" id="mainContent">
+      <section class="page active" id="page-beranda">
+        <div class="hero">
+          <div class="hero-copy">
+            <span class="eyebrow">SECONDHAND, FIRST-CLASS STYLE</span>
+            <h1>Gaya baru,<br /><em>cerita baru.</em></h1>
+            <p>Temukan fashion preloved pilihan yang masih layak pakai, lebih ramah di kantong dan bumi.</p>
+            <button class="primary-btn" data-page="kategori">Jelajahi koleksi <span>→</span></button>
+            <div class="hero-proof"><span>✓ Pilihan preloved</span><span>✓ Harga bersahabat</span></div>
+          </div>
+          <div class="hero-art" aria-label="Ilustrasi fashion preloved">
+            <div class="sun-shape"></div><div class="art-circle">RE<br />WEAR</div>
+            <div class="shirt shirt-one">✳</div><div class="shirt shirt-two">R</div>
+            <div class="art-caption">GOOD FINDS.<br />BETTER FUTURE.</div>
+          </div>
+        </div>
+        <div class="section-heading">
+          <div><span class="eyebrow">PILIH SESUAI GAYAMU</span><h2>Jelajahi kategori</h2></div>
+          <button class="text-link" data-page="kategori">Lihat semua →</button>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+        <div class="section-heading product-heading">
+          <div><span class="eyebrow">PRELOVED PILIHAN</span><h2>Temuan untukmu</h2></div>
+          <span class="muted">Barang unik, stok terbatas</span>
+        </div>
+        <div class="product-grid" id="homeProducts"></div>
+      </section>
+
+      <section class="page" id="page-kategori">
+        <div class="page-title"><span class="eyebrow">KURASI REWEAR</span><h1>Jelajahi produk</h1><p>Temukan item yang cocok untuk gayamu.</p></div>
+        <div class="filter-row" id="categoryFilters"></div>
+        <div class="product-grid" id="allProducts"></div>
+      </section>
+
+      <section class="page" id="page-keranjang">
+        <div class="page-title"><span class="eyebrow">SIAP JADI MILIKMU</span><h1>Keranjang</h1><p>Periksa kembali pilihanmu sebelum melanjutkan.</p></div>
+        <div id="cartContent"></div>
+      </section>
+
+      <section class="page" id="page-pesanan">
+        <div class="page-title"><span class="eyebrow">RIWAYAT BELANJA</span><h1>Pesanan saya</h1><p>Lihat detail dan status pesananmu di sini.</p></div>
+        <div class="order-tabs"><button class="order-tab active" data-order-filter="semua">Semua</button><button class="order-tab" data-order-filter="Dikemas">Dikemas</button><button class="order-tab" data-order-filter="Dikirim">Dikirim</button><button class="order-tab" data-order-filter="Selesai">Selesai</button></div>
+        <div id="ordersContent"></div>
+      </section>
+
+      <section class="page" id="page-pengiriman">
+        <div class="page-title"><span class="eyebrow">UPDATE PENGIRIMAN</span><h1>Dikemas & dikirim</h1><p>Pantau progres pesananmu dari penjual hingga sampai.</p></div>
+        <div class="shipping-legend"><span><i class="dot packed"></i> Sedang dikemas</span><span><i class="dot shipped"></i> Dalam pengiriman</span></div>
+        <div id="shippingContent"></div>
+      </section>
+
+      <section class="page" id="page-jual">
+        <div class="page-title"><span class="eyebrow">JADIKAN BARANGMU BERGUNA LAGI</span><h1>Jual barang preloved</h1><p>Isi informasi produkmu. Barang akan tampil di katalog demo ini.</p></div>
+        <form class="sell-form" id="sellForm">
+          <div class="form-intro"><span>✳</span><div><strong>Setiap barang punya cerita.</strong><p>Jelaskan kondisi barang dengan jujur agar pembeli merasa nyaman.</p></div></div>
+          <label>Nama produk<input name="name" required maxlength="70" placeholder="Contoh: Hoodie basic warna sage" /></label>
+          <div class="form-two">
+            <label>Kategori<select name="category" required><option value="">Pilih kategori</option><option>Kaus</option><option>Kemeja</option><option>Hoodie</option><option>Jaket</option><option>Celana</option><option>Tas</option><option>Aksesori</option></select></label>
+            <label>Kondisi<select name="condition" required><option value="">Pilih kondisi</option><option>Seperti baru</option><option>Sangat baik</option><option>Baik</option></select></label>
+          </div>
+          <label>Harga (Rp)<input name="price" type="number" min="1000" required placeholder="75000" /></label>
+          <label>Deskripsi<textarea name="description" rows="4" required maxlength="500" placeholder="Ceritakan ukuran, warna, kondisi, dan detail lainnya..."></textarea></label>
+          <label>Emoji produk <select name="emoji"><option>👕</option><option>👔</option><option>🧥</option><option>👖</option><option>👜</option><option>🧢</option><option>👟</option></select></label>
+          <button class="primary-btn full-btn" type="submit">Terbitkan produk <span>→</span></button>
+          <p class="form-note">Demo front-end: produk tersimpan di browser ini, belum diunggah ke server.</p>
+        </form>
+      </section>
+
+      <footer class="site-footer"><span>ReWear <b>●</b> Pilihan baik untuk gaya dan bumi.</span><span>Belanja lebih sadar, berpakaian lebih bebas.</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
